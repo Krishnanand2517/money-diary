@@ -5,13 +5,18 @@ import { ThemeContext } from "@/context/ThemeContext";
 import { ThemeContextType } from "@/types/ThemeContextTypes";
 
 export default function ThemeToggle() {
-  const { changeTheme } = useContext(ThemeContext) as ThemeContextType;
+  const { theme, changeTheme } = useContext(ThemeContext) as ThemeContextType;
 
   return (
     <div>
       <label className="swap swap-rotate">
         {/* this hidden checkbox controls the state */}
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          className="theme-controller"
+          value="lemonade"
+          checked={theme === "lemonade"}
+        />
 
         {/* sun icon */}
         <svg

@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ClientThemeWrapper from "@/context/ClientThemeWrapper";
 
+import Navbar from "@/components/Navbar";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,7 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
-          <ClientThemeWrapper>{children}</ClientThemeWrapper>
+          <ClientThemeWrapper>
+            <>
+              <Navbar />
+              <main>{children}</main>
+            </>
+          </ClientThemeWrapper>
         </ThemeProvider>
       </body>
     </html>
