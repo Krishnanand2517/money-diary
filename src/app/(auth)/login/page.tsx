@@ -1,3 +1,5 @@
+import { login, signup } from "./actions";
+
 export default function LoginPage() {
   return (
     <div className="flex justify-center items-center mt-10 bg-base-100">
@@ -30,8 +32,13 @@ export default function LoginPage() {
               </a>
             </label>
           </div>
-          <div className="form-control mt-6">
-            <button className="btn btn-primary">Login</button>
+          <div className="form-control mt-6 gap-6">
+            <button formAction={login} className="btn btn-accent">
+              Login
+            </button>
+            <button formAction={signup} className="btn btn-primary">
+              Signup
+            </button>
           </div>
         </form>
       </div>
