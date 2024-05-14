@@ -11,7 +11,7 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
-              placeholder="email"
+              name="email"
               className="input input-bordered"
               required
             />
@@ -22,7 +22,7 @@ export default function LoginPage() {
             </label>
             <input
               type="password"
-              placeholder="password"
+              name="password"
               className="input input-bordered"
               required
             />

@@ -5,32 +5,44 @@ import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { logout } from "@/app/(auth)/logout/actions";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const ActionButton = () => {
+  const pathname = usePathname();
+
   const [loggedInUser, setLoggedInUser] = useState<User | null>();
 
-  const fetchUser = async () => {
-    const supabase = createClient();
-
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (!error) {
-      setLoggedInUser(user);
-    } else {
-      console.log("Error fetching user", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        console.log(session.user);
+
+        setLoggedInUser(session.user);
+      } else {
+        console.log("Error fetching user", error);
+      }
+    };
+
     fetchUser();
-  }, []);
+  }, [pathname]);
+
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await logout();
+    setLoggedInUser(null);
+  };
 
   if (loggedInUser) {
     return (
-      <form action={logout}>
+      <form onSubmit={handleLogout}>
         <button type="submit" className="btn btn-ghost text-base px-6">
           Logout
         </button>
