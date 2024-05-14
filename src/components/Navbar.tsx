@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-2xl">Money Diary</a>
+        <a className="btn btn-ghost text-2xl px-2">Money Diary</a>
       </div>
       <div className="navbar-end flex items-center gap-8">
         <ActionButton />
