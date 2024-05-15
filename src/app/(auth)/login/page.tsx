@@ -26,6 +26,10 @@ export default function LoginPage() {
     } catch (error) {
       if (error instanceof Error) {
         setToastMessage(error.message);
+
+        setTimeout(() => {
+          setToastMessage("");
+        }, 4000);
       }
     } finally {
       setIsLoading(false);
@@ -33,7 +37,29 @@ export default function LoginPage() {
     }
   };
 
-  const handleSignup = async () => {};
+  const handleSignup = async () => {
+    setIsLoading(true);
+    setIsSigningUp(true);
+
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
+    try {
+      await signup(formData);
+    } catch (error) {
+      if (error instanceof Error) {
+        setToastMessage(error.message);
+
+        setTimeout(() => {
+          setToastMessage("");
+        }, 4000);
+      }
+    } finally {
+      setIsLoading(false);
+      setIsSigningUp(false);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center mt-10 bg-base-100">
@@ -98,6 +124,14 @@ export default function LoginPage() {
           </div>
         </form>
       </div>
+
+      {toastMessage && (
+        <div className="toast">
+          <div className="alert alert-error rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
+            <span>{toastMessage}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

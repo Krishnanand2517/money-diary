@@ -18,7 +18,7 @@ export async function login(formData: FormData) {
 
   // TODO: toast implementation for error
   if (error) {
-    redirect("/error");
+    throw new Error(error.message);
   }
 
   revalidatePath("/", "layout");
@@ -38,7 +38,7 @@ export async function signup(formData: FormData) {
 
   // TODO: toast implementation for error
   if (error) {
-    redirect("/error");
+    throw new Error(error.message);
   }
 
   revalidatePath("/", "layout");
