@@ -41,6 +41,10 @@ export default function LoginPage() {
     setIsLoading(true);
     setIsSigningUp(true);
 
+    // Email to be used in OTP verification
+    localStorage.removeItem("userEmail");
+    localStorage.setItem("userEmail", email);
+
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);

@@ -16,7 +16,6 @@ export async function login(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
-  // TODO: toast implementation for error
   if (error) {
     throw new Error(error.message);
   }
@@ -36,11 +35,10 @@ export async function signup(formData: FormData) {
 
   const { error } = await supabase.auth.signUp(data);
 
-  // TODO: toast implementation for error
   if (error) {
     throw new Error(error.message);
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/confirm");
 }

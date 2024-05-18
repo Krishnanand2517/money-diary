@@ -2,10 +2,14 @@
 
 import { FormEvent, KeyboardEvent, useState } from "react";
 
+import { confirm } from "./actions";
+
 export default function ConfirmPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
+
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleChange = (
     element: KeyboardEvent<HTMLInputElement>,
@@ -23,10 +27,33 @@ export default function ConfirmPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("Submitted OTP:", otp.join(""));
+
+    const OtpString = otp.join("");
+    const userEmail = localStorage.getItem("userEmail");
+
+    console.log(userEmail);
+    console.log("Submitted OTP:", OtpString);
+
+    try {
+      if (userEmail && OtpString) {
+        await confirm(userEmail, OtpString);
+
+        localStorage.removeItem("userEmail");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setToastMessage(error.message);
+
+        setTimeout(() => {
+          setToastMessage("");
+        }, 4000);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,6 +94,14 @@ export default function ConfirmPage() {
           </button>
         </form>
       </div>
+
+      {toastMessage && (
+        <div className="toast">
+          <div className="alert alert-error rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
+            <span>{toastMessage}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
