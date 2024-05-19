@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 
-import { login, signup } from "./actions";
+import { login, reset, signup } from "./actions";
 
 export default function LoginPage() {
+  const [hasForgotPassword, setHasForgotPassword] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+
+  const [toastMessageError, setToastMessageError] = useState("");
+  const [toastMessageSuccess, setToastMessageSuccess] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,10 +29,10 @@ export default function LoginPage() {
       await login(formData);
     } catch (error) {
       if (error instanceof Error) {
-        setToastMessage(error.message);
+        setToastMessageError(error.message);
 
         setTimeout(() => {
-          setToastMessage("");
+          setToastMessageError("");
         }, 4000);
       }
     } finally {
@@ -53,15 +57,41 @@ export default function LoginPage() {
       await signup(formData);
     } catch (error) {
       if (error instanceof Error) {
-        setToastMessage(error.message);
+        setToastMessageError(error.message);
 
         setTimeout(() => {
-          setToastMessage("");
+          setToastMessageError("");
         }, 4000);
       }
     } finally {
       setIsLoading(false);
       setIsSigningUp(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    setIsLoading(true);
+
+    try {
+      await reset(email);
+
+      setToastMessageSuccess(
+        "A password reset link has been sent to your email. Follow that link to proceed."
+      );
+
+      setTimeout(() => {
+        setToastMessageSuccess("");
+      }, 6000);
+    } catch (error) {
+      if (error instanceof Error) {
+        setToastMessageError(error.message);
+
+        setTimeout(() => {
+          setToastMessageError("");
+        }, 4000);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,69 +123,100 @@ export default function LoginPage() {
           </label>
 
           {/* PASSWORD */}
-          <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clipRule="evenodd"
-              />
-            </svg>
+          {!hasForgotPassword && (
+            <label className="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="w-4 h-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                  clipRule="evenodd"
+                />
+              </svg>
 
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="grow p-2 rounded-lg"
-              placeholder="Password"
-              required
-            />
-          </label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="grow p-2 rounded-lg"
+                placeholder="Password"
+                required
+              />
+            </label>
+          )}
 
           <label className="label">
-            <a href="#" className="label-text-alt link link-hover">
-              Forgot password?
-            </a>
+            <p
+              className="label-text-alt link link-hover"
+              onClick={() => setHasForgotPassword(!hasForgotPassword)}
+            >
+              {hasForgotPassword
+                ? "I remember the password now"
+                : "Forgot password?"}
+            </p>
           </label>
 
           {/* ACTION BUTTONS */}
-          <div className="form-control mt-6 gap-6">
-            <button
-              onClick={handleLogin}
-              className="btn btn-primary btn-outline"
-              disabled={isLoading}
-            >
-              {isLoggingIn ? (
-                <span className="loading loading-ball loading-md"></span>
-              ) : (
-                "Login"
-              )}
-            </button>
-            <button
-              onClick={handleSignup}
-              className="btn btn-accent"
-              disabled={isLoading}
-            >
-              {isSigningUp ? (
-                <span className="loading loading-ball loading-md"></span>
-              ) : (
-                "Create New Account"
-              )}
-            </button>
-          </div>
+          {hasForgotPassword ? (
+            <div className="form-control mt-14">
+              <button
+                onClick={handleResetPassword}
+                className="btn btn-secondary"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="loading loading-ball loading-md"></span>
+                ) : (
+                  "Reset Password"
+                )}
+              </button>
+            </div>
+          ) : (
+            <div className="form-control mt-6 gap-6">
+              <button
+                onClick={handleLogin}
+                className="btn btn-primary btn-outline"
+                disabled={isLoading}
+              >
+                {isLoggingIn ? (
+                  <span className="loading loading-ball loading-md"></span>
+                ) : (
+                  "Login"
+                )}
+              </button>
+              <button
+                onClick={handleSignup}
+                className="btn btn-accent"
+                disabled={isLoading}
+              >
+                {isSigningUp ? (
+                  <span className="loading loading-ball loading-md"></span>
+                ) : (
+                  "Create New Account"
+                )}
+              </button>
+            </div>
+          )}
         </form>
       </div>
 
-      {toastMessage && (
+      {toastMessageError && (
         <div className="toast">
           <div className="alert alert-error rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
-            <span>{toastMessage}</span>
+            <span>{toastMessageError}</span>
+          </div>
+        </div>
+      )}
+
+      {toastMessageSuccess && (
+        <div className="toast">
+          <div className="alert alert-success rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
+            <span>{toastMessageSuccess}</span>
           </div>
         </div>
       )}
