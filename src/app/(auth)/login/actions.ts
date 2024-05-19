@@ -44,7 +44,7 @@ export async function signup(formData: FormData) {
   redirect("/confirm");
 }
 
-export async function reset(email: string) {
+export async function resetPassword(email: string) {
   const supabase = createClient();
   const origin = headers().get("origin");
 

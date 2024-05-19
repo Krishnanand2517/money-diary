@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { login, reset, signup } from "./actions";
+import { login, resetPassword, signup } from "./actions";
 
 export default function LoginPage() {
   const [hasForgotPassword, setHasForgotPassword] = useState(false);
@@ -73,7 +73,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      await reset(email);
+      await resetPassword(email);
 
       setToastMessageSuccess(
         "A password reset link has been sent to your email. Follow that link to proceed."
