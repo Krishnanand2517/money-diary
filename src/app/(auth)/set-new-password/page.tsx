@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { changePassword } from "./actions";
 
 export default function SetNewPasswordPage() {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [toastMessageError, setToastMessageError] = useState("");
@@ -25,7 +28,8 @@ export default function SetNewPasswordPage() {
 
       setTimeout(() => {
         setToastMessageSuccess("");
-      }, 3500);
+        router.push("/dashboard");
+      }, 2800);
     } catch (error) {
       if (error instanceof Error) {
         setToastMessageError(error.message);

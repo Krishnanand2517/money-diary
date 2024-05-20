@@ -76,7 +76,7 @@ export default function LoginPage() {
       await resetPassword(email);
 
       setToastMessageSuccess(
-        "A password reset link has been sent to your email. Follow that link to proceed."
+        "A password reset link has been sent to your email. Follow that link to proceed. You can close this window."
       );
 
       setTimeout(() => {

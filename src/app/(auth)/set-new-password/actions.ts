@@ -1,8 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
 import { createClient } from "@/utils/supabase/server";
 
 export async function changePassword(newPassword: string) {
@@ -13,9 +10,4 @@ export async function changePassword(newPassword: string) {
   if (error) {
     throw new Error(error.message);
   }
-
-  setTimeout(() => {
-    revalidatePath("/", "layout");
-    redirect("/dashboard");
-  }, 3500);
 }
