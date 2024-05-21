@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { signup } from "./actions";
+import GoogleOAuthButton from "@/components/GoogleOAuthButton";
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -111,6 +112,8 @@ export default function SignupPage() {
               </p>
             </label>
           </Link>
+
+          <GoogleOAuthButton />
         </form>
       </div>
 
