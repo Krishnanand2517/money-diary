@@ -175,7 +175,7 @@ export default function LoginPage() {
 
           <div className="flex justify-evenly">
             <OAuthButton provider="google" />
-            <OAuthButton provider="azure" />
+            <OAuthButton provider="facebook" />
             <OAuthButton provider="github" />
           </div>
         </form>

@@ -6,7 +6,7 @@ import { Provider } from "@supabase/supabase-js";
 import { createClient } from "@/utils/supabase/client";
 
 import GoogleLogo from "../../public/Google_Logo.svg";
-import MicrosoftLogo from "../../public/Microsoft_Logo.svg";
+import FacebookLogo from "../../public/Facebook_Logo.svg";
 import GitHubLogo from "../../public/GitHub_Logo.svg";
 
 const OAuthButton = ({ provider }: { provider: Provider }) => {
@@ -15,8 +15,8 @@ const OAuthButton = ({ provider }: { provider: Provider }) => {
       case "google":
         return "Google";
 
-      case "azure":
-        return "Microsoft";
+      case "facebook":
+        return "Facebook";
 
       case "github":
         return "GitHub";
@@ -28,8 +28,8 @@ const OAuthButton = ({ provider }: { provider: Provider }) => {
       case "google":
         return GoogleLogo;
 
-      case "azure":
-        return MicrosoftLogo;
+      case "facebook":
+        return FacebookLogo;
 
       case "github":
         return GitHubLogo;
@@ -56,8 +56,8 @@ const OAuthButton = ({ provider }: { provider: Provider }) => {
         <Image
           src={showProviderLogo()}
           alt={showProviderDisplayName() || "Auth Button"}
-          height={provider === "azure" ? 20 : 25}
-          width={provider === "azure" ? 20 : 25}
+          height={25}
+          width={25}
           className={`${provider === "github" && "bg-white rounded-full"}`}
         />
         {/* Continue with {showProviderDisplayName()} */}
