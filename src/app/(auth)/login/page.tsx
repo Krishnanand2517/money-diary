@@ -1,15 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
-import { login, resetPassword, signup } from "./actions";
+import { login, resetPassword } from "./actions";
 
 export default function LoginPage() {
   const [hasForgotPassword, setHasForgotPassword] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isSigningUp, setIsSigningUp] = useState(false);
 
   const [toastMessageError, setToastMessageError] = useState("");
   const [toastMessageSuccess, setToastMessageSuccess] = useState("");
@@ -19,7 +18,6 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     setIsLoading(true);
-    setIsLoggingIn(true);
 
     const formData = new FormData();
     formData.append("email", email);
@@ -37,35 +35,6 @@ export default function LoginPage() {
       }
     } finally {
       setIsLoading(false);
-      setIsLoggingIn(false);
-    }
-  };
-
-  const handleSignup = async () => {
-    setIsLoading(true);
-    setIsSigningUp(true);
-
-    // Email to be used in OTP verification
-    localStorage.removeItem("userEmail");
-    localStorage.setItem("userEmail", email);
-
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-
-    try {
-      await signup(formData);
-    } catch (error) {
-      if (error instanceof Error) {
-        setToastMessageError(error.message);
-
-        setTimeout(() => {
-          setToastMessageError("");
-        }, 4000);
-      }
-    } finally {
-      setIsLoading(false);
-      setIsSigningUp(false);
     }
   };
 
@@ -183,25 +152,22 @@ export default function LoginPage() {
                 className="btn btn-primary btn-outline"
                 disabled={isLoading}
               >
-                {isLoggingIn ? (
+                {isLoading ? (
                   <span className="loading loading-ball loading-md"></span>
                 ) : (
                   "Login"
                 )}
               </button>
-              <button
-                onClick={handleSignup}
-                className="btn btn-accent"
-                disabled={isLoading}
-              >
-                {isSigningUp ? (
-                  <span className="loading loading-ball loading-md"></span>
-                ) : (
-                  "Create New Account"
-                )}
-              </button>
             </div>
           )}
+
+          <Link href="/signup">
+            <label className="label text-center">
+              <p className="label-text link link-hover">
+                {"Don't have an account? Create one now"}
+              </p>
+            </label>
+          </Link>
         </form>
       </div>
 

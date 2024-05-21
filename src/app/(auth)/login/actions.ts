@@ -25,25 +25,6 @@ export async function login(formData: FormData) {
   redirect("/dashboard");
 }
 
-export async function signup(formData: FormData) {
-  const supabase = createClient();
-
-  // TODO: Validate the inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
-  const { error } = await supabase.auth.signUp(data);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  revalidatePath("/", "layout");
-  redirect("/confirm");
-}
-
 export async function resetPassword(email: string) {
   const supabase = createClient();
   const origin = headers().get("origin");
@@ -55,6 +36,4 @@ export async function resetPassword(email: string) {
   if (error) {
     throw new Error(error.message);
   }
-
-  console.log(origin);
 }
