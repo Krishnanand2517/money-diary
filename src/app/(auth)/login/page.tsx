@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import { login, resetPassword } from "./actions";
 
+import OAuthButton from "@/components/OAuthButton";
+
 export default function LoginPage() {
   const [hasForgotPassword, setHasForgotPassword] = useState(false);
 
@@ -168,6 +170,14 @@ export default function LoginPage() {
               </p>
             </label>
           </Link>
+
+          <div className="divider divider-accent">OR Continue with</div>
+
+          <div className="flex justify-evenly">
+            <OAuthButton provider="google" />
+            <OAuthButton provider="azure" />
+            <OAuthButton provider="github" />
+          </div>
         </form>
       </div>
 

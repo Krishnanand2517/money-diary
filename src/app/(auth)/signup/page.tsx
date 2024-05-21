@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { signup } from "./actions";
-import GoogleOAuthButton from "@/components/GoogleOAuthButton";
+
+import OAuthButton from "@/components/OAuthButton";
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +114,13 @@ export default function SignupPage() {
             </label>
           </Link>
 
-          <GoogleOAuthButton />
+          <div className="divider divider-accent">OR Continue with</div>
+
+          <div className="flex justify-evenly">
+            <OAuthButton provider="google" />
+            <OAuthButton provider="azure" />
+            <OAuthButton provider="github" />
+          </div>
         </form>
       </div>
 
