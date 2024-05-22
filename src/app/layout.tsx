@@ -25,7 +25,7 @@ export default function RootLayout({
           <ClientThemeWrapper>
             <>
               <Navbar />
-              <main>{children}</main>
+              <main className="relative">{children}</main>
             </>
           </ClientThemeWrapper>
         </ThemeProvider>
