@@ -89,7 +89,6 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               className="grow p-2 rounded-lg"
               placeholder="Email"
-              required
             />
           </label>
 
@@ -116,7 +115,6 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="grow p-2 rounded-lg"
                 placeholder="Password"
-                required
               />
             </label>
           )}
@@ -152,7 +150,7 @@ export default function LoginPage() {
               <button
                 onClick={handleLogin}
                 className="btn btn-primary btn-outline"
-                disabled={isLoading}
+                disabled={isLoading || !email || !password}
               >
                 {isLoading ? (
                   <span className="loading loading-ball loading-md"></span>

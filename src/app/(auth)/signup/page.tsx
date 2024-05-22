@@ -63,7 +63,6 @@ export default function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               className="grow p-2 rounded-lg"
               placeholder="Email"
-              required
             />
           </label>
 
@@ -88,7 +87,6 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="grow p-2 rounded-lg"
               placeholder="Password"
-              required
             />
           </label>
 
@@ -96,7 +94,7 @@ export default function SignupPage() {
             <button
               onClick={handleSignup}
               className="btn btn-accent"
-              disabled={isLoading}
+              disabled={isLoading || !email || !password}
             >
               {isLoading ? (
                 <span className="loading loading-ball loading-md"></span>
