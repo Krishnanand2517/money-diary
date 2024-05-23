@@ -1,4 +1,6 @@
 import BudgetCard, { BudgetData } from "@/components/BudgetCard";
+import BudgetModal from "@/components/BudgetModal";
+import CreateBudgetBtn from "@/components/CreateBudgetBtn";
 
 export default function Dashboard() {
   const targetBudgetData: BudgetData[] = [
@@ -60,7 +62,7 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen p-20">
-      <button className="btn btn-primary mb-6">+ Create New Budget</button>
+      <CreateBudgetBtn />
 
       {targetBudgetData.length > 0 && renderTargetBudgets()}
       {expenseBudgetData.length > 0 && renderExpenseBudgets()}
@@ -72,6 +74,8 @@ export default function Dashboard() {
           </p>
         </>
       )}
+
+      <BudgetModal />
     </main>
   );
 }

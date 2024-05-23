@@ -22,7 +22,7 @@ const BudgetCard = ({
 }) => {
   return (
     <div
-      className={`card w-80 bg-base-100 shadow-xl border ${
+      className={`card w-80 bg-base-100 shadow-md shadow-base-content/50 hover:shadow-lg hover:shadow-base-content/90 transition-shadow border ${
         type === "target" ? "border-green-500" : "border-red-500 border-dashed"
       }`}
     >
