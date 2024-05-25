@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 type BudgetType = "target" | "expense";
 
@@ -13,8 +14,65 @@ const BudgetModal = () => {
   const [currentValue, setCurrentValue] = useState(0);
   const [targetValue, setTargetValue] = useState(1000);
 
-  const handleSubmit = () => {
-    console.log({ title, budgetType, targetDate, currentValue, targetValue });
+  const [toastErrorMessage, setToastErrorMessage] = useState("");
+  const [toastSuccessMessage, setToastSuccessMessage] = useState("");
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    try {
+      const supabase = createClient();
+
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        const { data, error } = await supabase
+          .from("budgets")
+          .insert({
+            title,
+            user_id: session.user.id,
+            budget_type: budgetType,
+            target_date: targetDate,
+            current_value: currentValue,
+            target_value: targetValue,
+          })
+          .select();
+
+        console.log(data);
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        if (data) {
+          setToastSuccessMessage(`Budget '${title}' created.`);
+
+          setTimeout(() => {
+            setToastSuccessMessage("");
+          }, 4000);
+
+          // Close the modal
+          document.getElementById("budget-modal")?.close();
+        }
+      }
+
+      if (error) {
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setToastErrorMessage(error.message);
+
+        setTimeout(() => {
+          setToastErrorMessage("");
+        }, 4000);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isBudgetType = (value: any): value is BudgetType => {
@@ -50,7 +108,7 @@ const BudgetModal = () => {
             />
           </div>
 
-          <div className="form-control mt-4 mb-6">
+          <div className="form-control mt-4 mb-8">
             <select
               value={budgetType}
               onChange={handleBudgetTypeChange}
@@ -123,6 +181,22 @@ const BudgetModal = () => {
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
       </form>
+
+      {toastErrorMessage && (
+        <div className="toast">
+          <div className="alert alert-error rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
+            <span>{toastErrorMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {toastSuccessMessage && (
+        <div className="toast">
+          <div className="alert alert-success rounded-lg font-semibold text-sm text-opacity-70 animate-bounce">
+            <span>{toastSuccessMessage}</span>
+          </div>
+        </div>
+      )}
     </dialog>
   );
 };
