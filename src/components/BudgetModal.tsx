@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
 type BudgetType = "target" | "expense";
 
 const BudgetModal = () => {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [title, setTitle] = useState("");
@@ -35,13 +38,11 @@ const BudgetModal = () => {
             title,
             user_id: session.user.id,
             budget_type: budgetType,
-            target_date: targetDate,
+            target_date: targetDate === "" ? null : targetDate,
             current_value: currentValue,
             target_value: targetValue,
           })
           .select();
-
-        console.log(data);
 
         if (error) {
           throw new Error(error.message);
@@ -52,10 +53,11 @@ const BudgetModal = () => {
 
           setTimeout(() => {
             setToastSuccessMessage("");
-          }, 4000);
 
-          // Close the modal
-          document.getElementById("budget-modal")?.close();
+            // Close the modal
+            document.getElementById("budget-modal")?.close();
+            router.refresh();
+          }, 1500);
         }
       }
 
