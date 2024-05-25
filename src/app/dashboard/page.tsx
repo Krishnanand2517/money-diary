@@ -1,36 +1,42 @@
 import BudgetCard, { BudgetData } from "@/components/BudgetCard";
 import BudgetModal from "@/components/BudgetModal";
 import CreateBudgetBtn from "@/components/CreateBudgetBtn";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Dashboard() {
-  const targetBudgetData: BudgetData[] = [
-    {
-      id: 1,
-      title: "Startup Fund",
-      createdDate: new Date("23 May 2024"),
-      targetDate: new Date("10 July 2024"),
-      currentValue: 5000,
-      targetValue: 80000,
-    },
-    {
-      id: 2,
-      title: "Travel Savings",
-      createdDate: new Date("20 April 2024"),
-      targetDate: new Date("30 June 2024"),
-      currentValue: 2000,
-      targetValue: 9000,
-    },
-  ];
+async function getBudgets() {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("budgets").select();
+  console.log(error);
 
-  const expenseBudgetData: BudgetData[] = [
-    {
-      id: 1,
-      title: "Petrol",
-      createdDate: new Date("11 May 2024"),
-      currentValue: 4500,
-      targetValue: 5000,
-    },
-  ];
+  return data;
+}
+
+export default async function Dashboard() {
+  // TODO: Find some better validation for this situation
+  const allBudgets = (await getBudgets()) || [];
+
+  // TODO: Add type validation instead of 'as'
+  const targetBudgetData: BudgetData[] = allBudgets
+    .filter((budget) => budget.budget_type === "target")
+    .map((budget) => ({
+      id: budget.id as number,
+      title: budget.title as string,
+      createdDate: new Date(budget.created_at),
+      targetDate: new Date(budget.target_date),
+      currentValue: budget.current_value as number,
+      targetValue: budget.target_value as number,
+    }));
+
+  const expenseBudgetData: BudgetData[] = allBudgets
+    .filter((budget) => budget.budget_type === "expense")
+    .map((budget) => ({
+      id: budget.id as number,
+      title: budget.title as string,
+      createdDate: new Date(budget.created_at),
+      targetDate: new Date(budget.target_date),
+      currentValue: budget.current_value as number,
+      targetValue: budget.target_value as number,
+    }));
 
   const renderExpenseBudgets = () => {
     return (
