@@ -22,7 +22,7 @@ export default async function Dashboard() {
       id: budget.id as number,
       title: budget.title as string,
       createdDate: new Date(budget.created_at),
-      targetDate: new Date(budget.target_date),
+      targetDate: budget.target_date ? new Date(budget.target_date) : undefined,
       currentValue: budget.current_value as number,
       targetValue: budget.target_value as number,
     }));
