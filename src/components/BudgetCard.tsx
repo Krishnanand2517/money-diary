@@ -1,3 +1,6 @@
+import DeleteBudgetButton from "./DeleteBudgetButton";
+import EditBudgetButton from "./EditBudgetButton";
+
 export interface BudgetData {
   id: number;
   title: string;
@@ -22,12 +25,17 @@ const BudgetCard = ({
 }) => {
   return (
     <div
-      className={`card w-80 bg-base-100 shadow-md shadow-base-content/50 hover:shadow-lg hover:shadow-base-content/90 transition-shadow border ${
+      className={`group card w-80 bg-base-100 shadow-md shadow-base-content/50 hover:shadow-lg hover:shadow-base-content/90 transition-shadow border ${
         type === "target" ? "border-green-500" : "border-red-500 border-dashed"
       }`}
     >
       <div className="card-body">
-        <h2 className="card-title font-bold justify-center">
+        <div className="absolute right-4 top-2 hidden group-hover:flex gap-2">
+          <EditBudgetButton />
+          <DeleteBudgetButton />
+        </div>
+
+        <h2 className="card-title font-bold justify-center mt-2">
           {budgetData.title}
         </h2>
 
