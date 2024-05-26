@@ -5,7 +5,10 @@ import { createClient } from "@/utils/supabase/server";
 
 async function getBudgets() {
   const supabase = createClient();
-  const { data, error } = await supabase.from("budgets").select();
+  const { data, error } = await supabase
+    .from("budgets")
+    .select()
+    .order("id", { ascending: false });
   console.log(error);
 
   return data;
