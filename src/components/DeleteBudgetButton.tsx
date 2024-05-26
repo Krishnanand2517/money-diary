@@ -24,10 +24,12 @@ const DeleteBudgetButton = ({ budgetId }: { budgetId: number }) => {
         .eq("id", budgetId);
 
       if (error) {
-        throw new Error(error.message);
-      }
+        console.log(error.message);
 
-      router.refresh();
+        throw new Error(error.message);
+      } else {
+        router.refresh();
+      }
     } catch (error) {
       if (error instanceof Error) {
         setToastErrorMessage(error.message);
