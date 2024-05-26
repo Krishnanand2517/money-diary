@@ -1,5 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import DeleteBudgetButton from "./DeleteBudgetButton";
 import EditBudgetButton from "./EditBudgetButton";
+import EditBudgetModal from "./EditBudgetModal";
 
 export interface BudgetData {
   id: number;
@@ -23,6 +27,20 @@ const BudgetCard = ({
   type: "target" | "expense";
   budgetData: BudgetData;
 }) => {
+  const [currentBudgetData, setCurrentBudgetData] = useState<BudgetData | null>(
+    null
+  );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.getElementById("budget-edit-modal")?.showModal();
+  }, [isEditModalOpen]);
+
+  const onEditClick = () => {
+    setCurrentBudgetData(budgetData);
+    setIsEditModalOpen(true);
+  };
+
   return (
     <div
       className={`group card w-80 bg-base-100 shadow-md shadow-base-content/50 hover:shadow-lg hover:shadow-base-content/90 transition-shadow border ${
@@ -31,7 +49,7 @@ const BudgetCard = ({
     >
       <div className="card-body">
         <div className="absolute right-4 top-2 hidden group-hover:flex gap-2">
-          <EditBudgetButton />
+          <EditBudgetButton onEditClick={onEditClick} />
           <DeleteBudgetButton budgetId={budgetData.id} />
         </div>
 
@@ -86,6 +104,12 @@ const BudgetCard = ({
           </div>
         </div>
       </div>
+
+      <EditBudgetModal
+        currentBudgetData={currentBudgetData}
+        isEditModalOpen={isEditModalOpen}
+        setIsEditModalOpen={setIsEditModalOpen}
+      />
     </div>
   );
 };
