@@ -32,7 +32,7 @@ const BudgetCard = ({
       <div className="card-body">
         <div className="absolute right-4 top-2 hidden group-hover:flex gap-2">
           <EditBudgetButton />
-          <DeleteBudgetButton />
+          <DeleteBudgetButton budgetId={budgetData.id} />
         </div>
 
         <h2 className="card-title font-bold justify-center mt-2">
