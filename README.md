@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Money Diary
 
-## Getting Started
+A 'Money Diary' to manage contributions towards a financial goal, and manage expenses within pre-defined limits. Made using Next.js and Supabase.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Live Link](#live-link)
+  - [Screenshots](#screenshots)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Running the Project Locally](#running-the-project-locally)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Link
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can check out Money Diary [here](https://money-diary-app.vercel.app/).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Screenshots
 
-## Learn More
+![](ReadmeImgs/money-1.png)
 
-To learn more about Next.js, take a look at the following resources:
+![](ReadmeImgs/money-2.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![](ReadmeImgs/money-3.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![](ReadmeImgs/money-4.png)
 
-## Deploy on Vercel
+## Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Create, update and delete 'budgets'
+- Two kinds of budgets - **Target Budgets** and **Expense Budgets**
+- _Contribute_ to target budgets and _spend_ from expense budgets
+- User authentication using **OTP verification** or social providers (Google, GitHub, and Facebook)
+- Light/Dark Theme
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Technologies Used
+
+- [Next.js](https://nextjs.org/)
+- [Supabase](https://supabase.com/) for storage and authentication
+- [Context API](https://react.dev/learn/passing-data-deeply-with-context)
+- [TailwindCSS](https://tailwindcss.com/)
+- [daisyUI](https://daisyui.com/)
+
+## Running the Project Locally
+
+These instructions will help you set up a copy of the project on your local machine.
+
+### Prerequisites
+
+Before getting started, make sure you have Node.js and npm (Node Package Manager) installed on your machine. This project requires Node.js version 18.17.0 or higher.
+
+### Installing & Usage
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/Krishnanand2517/money-diary
+   ```
+
+1. Navigate to the project directory & install the project dependencies:
+
+   ```bash
+   cd money-diary
+   npm install
+   ```
+
+1. Copy the environment variables to a new file `.env.local`:
+
+   ```bash
+   cp .env.sample .env.local
+   ```
+
+   Obtain the values and API keys for the variables from your Supabase project (create a new Supabase project for money-diary, if you haven't done so already).
+
+1. Once you have installed the project and its dependencies, you can run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   This will start the development server on port 3000, and you can access the project in your web browser at http://localhost:3000/.
+
+### Contribute
+
+If you encounter any issues, have suggestions, or want to contribute, feel free to open an issue or submit a pull request. Happy coding!
