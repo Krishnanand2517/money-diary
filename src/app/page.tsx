@@ -1,5 +1,6 @@
 import Image from "next/image";
 import PiggyImage from "../../public/piggy.png";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -20,7 +21,9 @@ export default function Home() {
             molestias placeat eligendi sed quisquam aliquam exercitationem
             debitis ducimus numquam harum veniam.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <Link href="/login">
+            <button className="btn btn-primary">Get Started</button>
+          </Link>
         </div>
       </div>
     </div>

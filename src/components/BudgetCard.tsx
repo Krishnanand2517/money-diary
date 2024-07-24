@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import DeleteBudgetButton from "./DeleteBudgetButton";
 import EditBudgetButton from "./EditBudgetButton";
 import EditBudgetModal from "./EditBudgetModal";
+import ContributeButton from "./ContributeButton";
+import SpendButton from "./SpendButton";
+import ContributeModal from "./ContributeModal";
 
 export interface BudgetData {
   id: number;
@@ -31,14 +34,29 @@ const BudgetCard = ({
     null
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
 
   useEffect(() => {
     document.getElementById("budget-edit-modal")?.showModal();
   }, [isEditModalOpen]);
 
+  useEffect(() => {
+    document.getElementById("contribute-modal")?.showModal();
+  }, [isContributeModalOpen]);
+
   const onEditClick = () => {
     setCurrentBudgetData(budgetData);
     setIsEditModalOpen(true);
+  };
+
+  const onContributeClick = () => {
+    setCurrentBudgetData(budgetData);
+    setIsContributeModalOpen(true);
+  };
+
+  const onSpendClick = () => {
+    setCurrentBudgetData(budgetData);
+    // Modal open
   };
 
   return (
@@ -103,12 +121,26 @@ const BudgetCard = ({
             </p>
           </div>
         </div>
+
+        <div className="flex justify-center">
+          {type === "target" ? (
+            <ContributeButton onContributeClick={onContributeClick} />
+          ) : (
+            <SpendButton onSpendClick={onSpendClick} />
+          )}
+        </div>
       </div>
 
       <EditBudgetModal
         currentBudgetData={currentBudgetData}
         isEditModalOpen={isEditModalOpen}
         setIsEditModalOpen={setIsEditModalOpen}
+      />
+
+      <ContributeModal
+        currentBudgetData={currentBudgetData}
+        isContributeModalOpen={isContributeModalOpen}
+        setIsContributeModalOpen={setIsContributeModalOpen}
       />
     </div>
   );
