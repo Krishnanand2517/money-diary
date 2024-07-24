@@ -16,10 +16,9 @@ export default function Home() {
         <div>
           <h1 className="text-5xl font-bold">Save More. Live More.</h1>
           <p className="py-6">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
-            sint deleniti obcaecati dicta aut aliquid esse odit perferendis,
-            molestias placeat eligendi sed quisquam aliquam exercitationem
-            debitis ducimus numquam harum veniam.
+            Track your spending, set budgets, and achieve financial freedom with
+            our intuitive Money Diary app—your personal guide to smarter saving
+            and better living.
           </p>
           <Link href="/login">
             <button className="btn btn-primary">Get Started</button>
