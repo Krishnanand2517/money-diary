@@ -7,6 +7,7 @@ import EditBudgetModal from "./EditBudgetModal";
 import ContributeButton from "./ContributeButton";
 import SpendButton from "./SpendButton";
 import ContributeModal from "./ContributeModal";
+import SpendModal from "./SpendModal";
 
 export interface BudgetData {
   id: number;
@@ -35,6 +36,7 @@ const BudgetCard = ({
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
+  const [isSpendModalOpen, setIsSpendModalOpen] = useState(false);
 
   useEffect(() => {
     document.getElementById("budget-edit-modal")?.showModal();
@@ -43,6 +45,10 @@ const BudgetCard = ({
   useEffect(() => {
     document.getElementById("contribute-modal")?.showModal();
   }, [isContributeModalOpen]);
+
+  useEffect(() => {
+    document.getElementById("spend-modal")?.showModal();
+  }, [isSpendModalOpen]);
 
   const onEditClick = () => {
     setCurrentBudgetData(budgetData);
@@ -56,7 +62,7 @@ const BudgetCard = ({
 
   const onSpendClick = () => {
     setCurrentBudgetData(budgetData);
-    // Modal open
+    setIsSpendModalOpen(true);
   };
 
   return (
@@ -141,6 +147,12 @@ const BudgetCard = ({
         currentBudgetData={currentBudgetData}
         isContributeModalOpen={isContributeModalOpen}
         setIsContributeModalOpen={setIsContributeModalOpen}
+      />
+
+      <SpendModal
+        currentBudgetData={currentBudgetData}
+        isSpendModalOpen={isSpendModalOpen}
+        setIsSpendModalOpen={setIsSpendModalOpen}
       />
     </div>
   );
