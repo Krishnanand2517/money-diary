@@ -41,8 +41,9 @@ const ContributeModal = ({
       if (error) {
         throw new Error(error.message);
       } else {
-        document.getElementById("contribute-modal")?.close();
         router.refresh();
+        document.getElementById("contribute-modal")?.close();
+        resetState();
         setIsContributeModalOpen(false);
       }
     } catch (error) {
@@ -56,6 +57,10 @@ const ContributeModal = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const resetState = () => {
+    setContributionValue(100);
   };
 
   if (!isContributeModalOpen) return;

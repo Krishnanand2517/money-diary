@@ -39,8 +39,9 @@ const SpendModal = ({
       if (error) {
         throw new Error(error.message);
       } else {
-        document.getElementById("spend-modal")?.close();
         router.refresh();
+        document.getElementById("spend-modal")?.close();
+        resetState();
         setIsSpendModalOpen(false);
       }
     } catch (error) {
@@ -54,6 +55,10 @@ const SpendModal = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const resetState = () => {
+    setSpendValue(100);
   };
 
   if (!isSpendModalOpen) return;

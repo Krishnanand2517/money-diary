@@ -55,9 +55,9 @@ const BudgetModal = () => {
           setTimeout(() => {
             setToastSuccessMessage("");
 
-            // Close the modal
-            document.getElementById("budget-modal")?.close();
             router.refresh();
+            document.getElementById("budget-modal")?.close();
+            resetState();
           }, 1500);
         }
       }
@@ -76,6 +76,14 @@ const BudgetModal = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const resetState = () => {
+    setTitle("");
+    setBudgetType(undefined);
+    setTargetDate("");
+    setCurrentValue(0);
+    setTargetValue(1000);
   };
 
   const isBudgetType = (value: any): value is BudgetType => {
