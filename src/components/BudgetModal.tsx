@@ -39,7 +39,8 @@ const BudgetModal = () => {
             user_id: session.user.id,
             budget_type: budgetType,
             target_date: targetDate === "" ? null : targetDate,
-            current_value: currentValue,
+            current_value:
+              budgetType === "expense" ? targetValue : currentValue,
             target_value: targetValue,
           })
           .select();
@@ -137,18 +138,20 @@ const BudgetModal = () => {
             />
           </div>
 
-          <div className="form-control">
-            <div className="label">
-              <span className="label-text">Current Amount</span>
+          {budgetType === "target" && (
+            <div className="form-control">
+              <div className="label">
+                <span className="label-text">Current Amount</span>
+              </div>
+              <input
+                type="number"
+                value={currentValue.toString()}
+                onChange={(e) => setCurrentValue(Number(e.target.value))}
+                className="input input-bordered"
+                required
+              />
             </div>
-            <input
-              type="number"
-              value={currentValue.toString()}
-              onChange={(e) => setCurrentValue(Number(e.target.value))}
-              className="input input-bordered"
-              required
-            />
-          </div>
+          )}
 
           <div className="form-control">
             <div className="label">
