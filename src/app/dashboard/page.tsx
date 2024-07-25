@@ -2,6 +2,7 @@ import BudgetCard, { BudgetData } from "@/components/BudgetCard";
 import BudgetModal from "@/components/BudgetModal";
 import CreateBudgetBtn from "@/components/CreateBudgetBtn";
 import { createClient } from "@/utils/supabase/server";
+import Link from "next/link";
 
 async function getBudgets() {
   const supabase = createClient();
@@ -77,12 +78,18 @@ export default async function Dashboard() {
       {expenseBudgetData.length > 0 && renderExpenseBudgets()}
 
       {targetBudgetData.length === 0 && expenseBudgetData.length === 0 && (
-        <>
-          <p className="my-12 text-center px-4 font-medium text-lg">
-            No budgets to show. Create one now!
-          </p>
-        </>
+        <p className="my-12 text-center px-4 font-medium text-lg">
+          No budgets to show. Create one now!
+        </p>
       )}
+
+      <hr className="mt-32" />
+      <div className="mt-8 flex justify-center items-center gap-8">
+        <p className="text-sm">Planning to leave?</p>
+        <Link href="/delete-user-data" className="btn btn-error btn-sm">
+          Delete User Data
+        </Link>
+      </div>
 
       <BudgetModal />
     </main>

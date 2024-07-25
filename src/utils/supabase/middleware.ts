@@ -63,6 +63,8 @@ export async function updateSession(request: NextRequest) {
   if (
     !request.nextUrl.pathname.startsWith("/dashboard") &&
     !request.nextUrl.pathname.startsWith("/set-new-password") &&
+    !request.nextUrl.pathname.startsWith("/delete-user-data") &&
+    !request.nextUrl.pathname.startsWith("/privacy-policy.html") &&
     !user.error
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
