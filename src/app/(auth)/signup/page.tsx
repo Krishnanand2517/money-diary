@@ -116,7 +116,7 @@ export default function SignupPage() {
 
           <div className="flex justify-evenly">
             <OAuthButton provider="google" />
-            <OAuthButton provider="facebook" />
+            {/* <OAuthButton provider="facebook" /> */}
             <OAuthButton provider="github" />
           </div>
         </form>

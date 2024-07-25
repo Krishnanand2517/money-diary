@@ -29,7 +29,7 @@ You can check out Money Diary [here](https://money-diary-app.vercel.app/).
 - Create, update and delete 'budgets'
 - Two kinds of budgets - **Target Budgets** and **Expense Budgets**
 - _Contribute_ to target budgets and _spend_ from expense budgets
-- User authentication using **OTP verification** or social providers (Google, GitHub, and Facebook)
+- User authentication using **OTP verification** or social providers (Google and GitHub)
 - Light/Dark Theme
 
 ## Technologies Used
